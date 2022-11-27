@@ -1,0 +1,17 @@
+export const operationsList = [
+    // { label: "判断节点", value: "fork", opr: "fork" },
+    { label: "通道变更", value: "pipeline", opr: "channels"},
+    { label: "裁剪", value: "pipeline", opr: "crop" },
+    { label: "缩放", value: "pipeline", opr: "resize" },
+    { label: "旋转", value: "pipeline", opr: "rotate" },
+    { label: "阈值化", value: "pipeline", opr: "threshold" },
+    { label: "滤波", value: "pipeline", opr: "blur" },
+    { label: "去噪", value: "pipeline", opr: "denoising" },
+    { label: "形态学", value: "pipeline", opr: "morphology" },
+    { label: "模板匹配", value: "pipeline", opr: "template" },
+    { label: "边缘检测", value: "pipeline", opr: "edge" },
+    { label: "霍夫变换", value: "pipeline", opr: "hough" },
+    { label: "特征检测", value: "pipeline", opr: "feature" },
+    { label: "畸变矫正", value: "pipeline", opr: "remap" },
+    { label: "像素统计", value: "pipeline", opr: "hist" },
+];
