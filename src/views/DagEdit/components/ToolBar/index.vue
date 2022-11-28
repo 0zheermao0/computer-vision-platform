@@ -326,7 +326,36 @@ export default {
       console.log(graph.toJSON());
     },
     handleSubmit() {
-      console.log("提交", graph.toJSON());
+      let formData = new FormData();
+      let nodes = graph.getNodes();
+      let edges = graph.getEdges();
+      let nodesData = [];
+      let edgesData = [];
+      nodes.forEach((node) => {
+        let params = node.data.params;
+        // 将params中每个参数的value取出
+        let paramsData = {};
+        for (let key in params) {
+          paramsData[key] = params[key].value;
+        }
+        let nodeData = {
+          id: node.id,
+          name: node.data.name,
+          params: paramsData,
+        };
+        nodesData.push(nodeData);
+      });
+      edges.forEach((edge) => {
+        let edgeData = {
+          source: edge.source.cell,
+          target: edge.target.cell,
+        };
+        edgesData.push(edgeData);
+      });
+      formData.append("nodes", JSON.stringify(nodesData));
+      formData.append("edges", JSON.stringify(edgesData));
+      console.log(formData.get("nodes"));
+      console.log(formData.get("edges"));
     }
   }
 };

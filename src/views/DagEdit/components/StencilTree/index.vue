@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-input {
-  width: 196px;
+  width: 10vw;
   height: 32px;
   margin: 16px 24px;
 }

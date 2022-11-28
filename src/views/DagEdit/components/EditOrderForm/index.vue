@@ -7,26 +7,6 @@
         label-width="90px"
         @submit.native.prevent
     >
-<!--      <el-form-item label="组件标题" >-->
-<!--        <el-input-->
-<!--            v-model="orderFormData.name"-->
-<!--            placeholder="请输入标题"-->
-<!--            @input="debounceHandler"-->
-<!--            @keyup.native.enter="debounceHandler"-->
-<!--        ></el-input>-->
-<!--      </el-form-item>-->
-
-<!--      <el-form-item label="描述" >-->
-<!--        <el-input-->
-<!--            v-model="orderFormData.description"-->
-<!--            :autosize="{ minRows: 3, maxRows: 4 }"-->
-<!--            type="textarea"-->
-<!--            placeholder="请输入描述"-->
-<!--            @input="debounceHandler"-->
-<!--            @keyup.native.enter="debounceHandler"-->
-<!--        ></el-input>-->
-<!--      </el-form-item>-->
-<!--      取出formData中的params作为form item-->
       <el-form-item
           v-for="(item, index) in Object.keys(orderFormData.params)"
           :key="index"
@@ -79,14 +59,6 @@ export default {
       }
     };
   },
-  computed: {
-    isVisibile: {
-      get() {
-        return this.dialogVisibleAddOrder;
-      },
-      set() {}
-    },
-  },
   watch: {
     formData: {
       handler(val) {
@@ -120,7 +92,7 @@ export default {
     },
 
     handlerChange() {
-      this.$emit("updateCellData", cloneDeep(this.orderFormData));
+      // this.$emit("updateCellData", cloneDeep(this.orderFormData));
       console.log("handlerChange", this.orderFormData);
     },
     debounceHandler: debounce(function () {

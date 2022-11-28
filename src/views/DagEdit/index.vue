@@ -32,9 +32,16 @@
             @updateCellData="setNodeInfo"
           >
           </EditOrderForm>
+          <EditOrderForm
+              v-else
+              ref="orderForm"
+              :form-data="cellData"
+              @updateCellData="setNodeInfo"
+          >
+          </EditOrderForm>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="handleCancelDialog">取 消</el-button>
-            <el-button type="primary" @click="paramsDialogVisible = false">确 定</el-button>
+<!--            <el-button @click="handleCancelDialog">取 消</el-button>-->
+            <el-button type="primary" @click="handleCancelDialog">确 定</el-button>
           </div>
         </el-dialog>
 <!--        <div v-else class="tips-info"><i class="el-icon-info"></i>请点击节点进行编辑</div>-->
@@ -101,7 +108,8 @@ export default {
       const start_node = graph.createNode({
         shape: "start",
         x: 200,
-        y: 50
+        y: 50,
+        data: {name: '图片源', params: {type: {label: '源类型', value: '', options: ['单张图片', '文件夹']}, img: {label: '图片', value: ''}}}
       });
       graph.addNode(start_node);
     },
@@ -112,7 +120,7 @@ export default {
            this.clearData();
         }
       });
-      graph.on("cell:click",  ({ cell }) => {
+      graph.on("cell:dblclick",  ({ cell }) => {
         let isNode = cell.isNode();
         this.clearData();
         if (isNode) {
@@ -126,7 +134,7 @@ export default {
       this.currentSelect = cell.shape;
       this.currentCell = cell;
       Object.assign(this.cellData, cell.getData());
-      console.log('formData:', this.cellData)
+      console.log('getNodeInfo:', this.cellData)
       let nodeAttrs = cell.getAttrs();
       this.cellData.name = nodeAttrs?.label?.text;
       this.paramsDialogVisible = true;

@@ -1,109 +1,5 @@
 // 节点配置信息
-export const nodeData = {
-    fork: {
-        name: "判断节点",
-        description: "判断节点",
-        triggerType: null, // 触发条件
-        targetUnit: null, // 目标单位
-        statusUnit: null, // 单位状态
-        targetArea: null, // 区域
-        situationTime: null, // 态势时间
-        countdown: null, // 倒计时
-        selectTime: null // 指定时间点
-    },
-    channels: {
-        name: "通道变更",
-        params: {
-            channels: ['RGB转GRAY', 'RGB转HSV']
-        },
-    },
-    crop: {
-        name: "裁剪",
-        params: {
-            x起始点: null,
-            x终点: null,
-            y起始点: null,
-            y终点: null
-        },
-    },
-    resize: {
-        name: "缩放",
-        params: {
-            width: null,
-            height: null,
-            inter_method: null
-        }
-    },
-    rotate: {
-        name: "旋转",
-        params: {
-            angle: null
-        }
-    },
-    threshold: {
-        name: "阈值化",
-        params: {
-            type: [],
-            threshold: null,
-        }
-    },
-    blur: {
-        name: "滤波",
-        params: {
-            type: ['中值滤波', '高斯滤波'],
-        }
-    },
-    denoising: {
-        name: "去噪",
-        params: {
-            type: [],
-        }
-    },
-    morphology: {
-        name: "形态学",
-        params: {
-            type: [],
-        }
-    },
-    template: {
-        name: "模板匹配",
-        params: {
-            model: null,
-        }
-    },
-    edge: {
-        name: "边缘检测",
-        params: {
-            type: [],
-        }
-    },
-    hough: {
-        name: "霍夫变换",
-        params: {
-            type: [],
-        }
-    },
-    feature: {
-        name: "特征检测",
-        params: {
-            type: [],
-        }
-    },
-    remap: {
-        name: "畸变矫正",
-        params: {
-            cameraMatrix: null,
-            distCoeffs: null,
-            newCameraMatrix: null,
-        }
-    },
-    hist: {
-        name: "像素统计",
-        params: {
-            holder: null,
-        }
-    },
-};
+
 
 // 上传表单对象
 export const formData = {
@@ -117,6 +13,12 @@ export const formData = {
         situationTime: null, // 态势时间
         countdown: null, // 倒计时
         selectTime: null // 指定时间点
+    },
+    start: {
+        name: "图像源",
+        params: {
+            img: {label: '图片', value: ''},
+        }
     },
     channels: {
         name: "通道变更",
