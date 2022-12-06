@@ -109,7 +109,7 @@ export default {
         shape: "start",
         x: 200,
         y: 50,
-        data: {name: '图片源', params: {type: {label: '源类型', value: '', options: ['单张图片', '文件夹']}, img: {label: '图片', value: ''}}}
+        data: {id: 0, name: {label: '图片源', value: 'img_src'}, params: {type: {label: '源类型', value: '', options: ['单张图片', '文件夹']}, img: {label: '图片', value: '', type: 'img'}}}
       });
       graph.addNode(start_node);
     },
@@ -136,7 +136,7 @@ export default {
       Object.assign(this.cellData, cell.getData());
       console.log('getNodeInfo:', this.cellData)
       let nodeAttrs = cell.getAttrs();
-      this.cellData.name = nodeAttrs?.label?.text;
+      this.cellData.name.label = nodeAttrs?.label?.text;
       this.paramsDialogVisible = true;
     },
     // 清空选中节点数据
@@ -153,7 +153,7 @@ export default {
       if (val?.name) {
         let attr = {
           label: {
-            text: this.cellData.name
+            text: this.cellData.name.label
           }
         };
         this.currentCell.setAttrs(attr);

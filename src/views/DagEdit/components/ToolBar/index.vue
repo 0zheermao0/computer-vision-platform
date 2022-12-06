@@ -159,6 +159,7 @@
 <script>
 import DagGraph from "../../graph";
 import { DataUri } from "@antv/x6";
+import request from "@/utils/http/request";
 let graph = null;
 export default {
   name: "ToolBar",
@@ -340,7 +341,7 @@ export default {
         }
         let nodeData = {
           id: node.id,
-          name: node.data.name,
+          name: node.data.name.value,
           params: paramsData,
         };
         nodesData.push(nodeData);
@@ -354,8 +355,13 @@ export default {
       });
       formData.append("nodes", JSON.stringify(nodesData));
       formData.append("edges", JSON.stringify(edgesData));
-      console.log(formData.get("nodes"));
-      console.log(formData.get("edges"));
+      request({
+        method: 'post',
+        url: '/scheduling/execute/',
+        data: formData
+      }).then((res) => {
+        console.log(res.data.data)
+      })
     }
   }
 };

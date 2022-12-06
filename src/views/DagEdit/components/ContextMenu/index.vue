@@ -1,7 +1,7 @@
 <template>
   <div v-show="isShow" id="x6-menu-wrap" class="x6-menu-wrap">
     <div class="x6-menu">
-      <div v-show="type == 'node'" class="x6-menu-item">
+      <div v-show="type === 'node'" class="x6-menu-item">
         <el-button icon="el-icon-document-copy" @click="copyNode"
           >复制</el-button
         >
