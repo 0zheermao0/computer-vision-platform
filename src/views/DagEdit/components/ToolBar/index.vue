@@ -159,7 +159,7 @@
 <script>
 import DagGraph from "../../graph";
 import { DataUri } from "@antv/x6";
-import request from "@/utils/http/request";
+
 let graph = null;
 export default {
   name: "ToolBar",
@@ -196,6 +196,10 @@ export default {
       graph = DagGraph?.graph;
       this.initEvent();
     }, 200);
+    this.$websocket.initWebSocket();
+  },
+  beforeDestroy() {
+    this.$websocket.close();
   },
   methods: {
     initEvent() {
@@ -355,13 +359,21 @@ export default {
       });
       formData.append("nodes", JSON.stringify(nodesData));
       formData.append("edges", JSON.stringify(edgesData));
-      request({
-        method: 'post',
-        url: '/scheduling/execute/',
-        data: formData
-      }).then((res) => {
-        console.log(res.data.data)
-      })
+      // request({
+      //   method: 'post',
+      //   url: '/scheduling/execute/',
+      //   data: formData
+      // }).then((res) => {
+      //   console.log(res.data.data)
+      // })
+      let formDataJson = {};
+      for (let key of formData.keys()) {
+        formDataJson[key] = formData.get(key);
+      }
+      this.$websocket.webSocketSend({
+        type: "execute",
+        data: formDataJson
+      });
     }
   }
 };
