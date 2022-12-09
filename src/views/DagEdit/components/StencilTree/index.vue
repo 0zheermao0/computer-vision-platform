@@ -82,4 +82,8 @@ export default {
   font-weight: 400;
   color: #b1dce1;
 }
+.list-item:hover {
+  background-color: #1b2a3a;
+  cursor: pointer;
+}
 </style>

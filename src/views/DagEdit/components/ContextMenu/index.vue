@@ -37,7 +37,7 @@ export default {
     initEvent() {
       graph.on("cell:contextmenu", ({ e, cell }) => {
         let shape = cell.shape;
-        if (shape == "start") return;
+        if (shape === "start") return;
         this.isShow = true;
         graph.resetSelection(cell);
         const elem = document.querySelector(".x6-menu-wrap");
@@ -47,7 +47,7 @@ export default {
       });
       graph.on("blank:click", () => {
         this.isShow = false;
-        this.type = "blabk";
+        this.type = "blank";
       });
     },
     copyNode() {

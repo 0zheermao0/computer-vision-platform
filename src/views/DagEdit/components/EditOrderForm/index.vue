@@ -23,7 +23,6 @@
             :auto-upload="true"
             :limit="1"
             :before-upload="beforeImgUpload">
-<!--          <img v-if="imageUrl" :src="imageUrl" class="img">-->
           <i class="el-icon-plus img-uploader-icon"></i>
         </el-upload>
         <el-input

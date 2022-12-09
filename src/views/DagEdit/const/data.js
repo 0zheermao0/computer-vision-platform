@@ -18,6 +18,7 @@ export const formData = {
         id: 0,
         name: {label: "图像源", value: "img_src"},
         params: {
+            type: {label: '源类型', value: '', options: ['单张图片', '文件夹']},
             img: {label: '图片', value: '', type: 'img'},
         }
     },
@@ -25,7 +26,7 @@ export const formData = {
         id: 1,
         name: {label: "通道变更", value: "changeChannels"},
         params: {
-            channels: {label: '通道', value: '', options: ['RGB转GRAY', 'RGB转HSV']}
+            channels: {label: '通道', value: '', options: ['GRAY', 'HSV']}
         },
     },
     crop: {

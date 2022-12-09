@@ -1,8 +1,12 @@
 import ElementUI from 'element-ui'
 
+class myWebSocket extends WebSocket{
+    data = 'http://192.168.137.221:8000/media/test.png'
+}
+
 function initWebSocket () {
     const wsUri = 'ws://192.168.137.221:8000/ws/'
-    this.socket = new WebSocket(wsUri)// 这里面的this都指向vue
+    this.socket = new myWebSocket(wsUri)// 这里面的this都指向vue
     this.socket.onerror = webSocketOnError
     this.socket.onmessage = webSocketOnMessage
     this.socket.onclose = closeWebsocket
@@ -44,11 +48,14 @@ function webSocketOnMessage (e) {
             position: 'bottom-right',
             duration: 0
         })
+    } else if (data.contentType === 'RES') {
+        let url = 'data:image/png:base64,' + data.content.img
+        this.data = url
     } else {
         console.log(data.content)
     }
 }
-// 关闭websiocket
+// 关闭websocket
 function closeWebsocket () {
     console.log('连接已关闭...')
     close()
@@ -63,6 +70,7 @@ function close () {
 function webSocketSend (message) {
     this.socket.send(JSON.stringify(message))
 }
+
 export default {
     initWebSocket, close, webSocketSend
 }

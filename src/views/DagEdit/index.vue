@@ -23,34 +23,31 @@
         </el-tabs> -->
       <header class="base-header-title">模块结果</header>
       <div v-if="enabled" class="right-content">
-        <!-- 算法组件 -->
-        <el-dialog title="参数设置" :visible.sync="paramsDialogVisible" @close='handleCancelDialog'>
-          <EditOrderForm
-            v-if="currentSelect === 'pipeline'"
-            ref="orderForm"
-            :form-data="cellData"
-            @updateCellData="setNodeInfo"
-          >
-          </EditOrderForm>
-          <EditOrderForm
-              v-else
-              ref="orderForm"
-              :form-data="cellData"
-              @updateCellData="setNodeInfo"
-          >
-          </EditOrderForm>
-          <div slot="footer" class="dialog-footer">
-<!--            <el-button @click="handleCancelDialog">取 消</el-button>-->
-            <el-button type="primary" @click="handleCancelDialog">确 定</el-button>
-          </div>
-        </el-dialog>
-<!--        <div v-else class="tips-info"><i class="el-icon-info"></i>请点击节点进行编辑</div>-->
-
-
-        <div style="color: aliceblue">placeholder</div>
+        <VisualizedResult :base-url="baseUrl"/>
       </div>
     </aside>
     <ContextMenu v-if="enabled"></ContextMenu>
+
+    <el-dialog title="参数设置" :visible.sync="paramsDialogVisible" @close='handleCancelDialog'>
+      <EditOrderForm
+          v-if="currentSelect === 'pipeline'"
+          ref="orderForm"
+          :form-data="cellData"
+          @updateCellData="setNodeInfo"
+      >
+      </EditOrderForm>
+      <EditOrderForm
+          v-else
+          ref="orderForm"
+          :form-data="cellData"
+          @updateCellData="setNodeInfo"
+      >
+      </EditOrderForm>
+      <div slot="footer" class="dialog-footer">
+        <!--            <el-button @click="handleCancelDialog">取 消</el-button>-->
+        <el-button type="primary" @click="handleCancelDialog">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -62,6 +59,8 @@ import ContextMenu from "./components/ContextMenu";
 // import EditConditionForm from "./components/EditConditionForm";
 import EditOrderForm from "./components/EditOrderForm";
 import StencilTree from "./components/StencilTree";
+import VisualizedResult from "./components/VisualizedResult";
+import {formData} from "@/views/DagEdit/const/data";
 
 let graph = null;
 export default {
@@ -71,7 +70,8 @@ export default {
     ToolBar,
     ContextMenu,
     // EditConditionForm,
-    EditOrderForm
+    EditOrderForm,
+    VisualizedResult
   },
   data() {
     return {
@@ -82,15 +82,20 @@ export default {
       cellData: {},
       graphData:null,
       paramsDialogVisible: false,
+      visualizedResult: {},
+      baseUrl: 'http://192.168.137.221:8000/media/test.png',
     };
   },
-  created() {},
+  created() {
+  },
   mounted() {
     this.initDagGraph();
     this.initGraphStart();
+    this.$websocket.initWebSocket();
   },
   beforeDestroy() {
     DagGraph.destroy();
+    this.$websocket.close();
   },
   methods: {
     // 初始化x6图编辑引擎
@@ -109,7 +114,7 @@ export default {
         shape: "start",
         x: 200,
         y: 50,
-        data: {id: 0, name: {label: '图片源', value: 'img_src'}, params: {type: {label: '源类型', value: '', options: ['单张图片', '文件夹']}, img: {label: '图片', value: '', type: 'img'}}}
+        data: formData['start']
       });
       graph.addNode(start_node);
     },
@@ -127,8 +132,11 @@ export default {
           this.getNodeInfo(cell);
         }
       })
+      graph.on("cell:click",  ({ cell }) => {
+        console.log('click:', cell)
+        this.baseUrl = 'http://192.168.137.221:8000/media/test1.png'
+      })
     },
-
     // 获取被选中节点的数据
     getNodeInfo(cell) {
       this.currentSelect = cell.shape;
@@ -176,6 +184,9 @@ export default {
       graph.unselect(this.currentCell);
       this.clearData();
     }
+  },
+  handleMessage(e) {
+    console.log('message:', e)
   }
 };
 </script>

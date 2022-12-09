@@ -131,27 +131,26 @@
         </el-button>
       </el-tooltip>
 
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="打印 (Cmd + P)"
-        placement="bottom"
-      >
-        <el-button
-          name="print"
-          class="el-icon-printer"
-          size="small"
-          @click="handleClick"
-        >
-        </el-button>
-      </el-tooltip>
+<!--      <el-tooltip-->
+<!--        class="item"-->
+<!--        effect="dark"-->
+<!--        content="打印 (Cmd + P)"-->
+<!--        placement="bottom"-->
+<!--      >-->
+<!--        <el-button-->
+<!--          name="print"-->
+<!--          class="el-icon-printer"-->
+<!--          size="small"-->
+<!--          @click="handleClick"-->
+<!--        >-->
+<!--        </el-button>-->
+<!--      </el-tooltip>-->
     </div>
     <div class="bar-item btn-list">
       <el-button class="btn-save" type="primary" plain @click="handleSubmit"
         >运 行</el-button>
-      <!-- <el-button class="btn-cancel" type="primary" plain @click="handleBack"
-        >取消</el-button
-      > -->
+      <el-button class="btn-cancel" type="primary" plain @click="handleReconnect"
+        >重连</el-button>
     </div>
   </div>
 </template>
@@ -196,10 +195,8 @@ export default {
       graph = DagGraph?.graph;
       this.initEvent();
     }, 200);
-    this.$websocket.initWebSocket();
   },
   beforeDestroy() {
-    this.$websocket.close();
   },
   methods: {
     initEvent() {
@@ -322,8 +319,8 @@ export default {
       });
       graph.addNode(start_node);
     },
-    handleBack() {
-      this.$emit("backTo");
+    handleReconnect() {
+      this.$websocket.initWebSocket()
     },
     handleSave() {
       this.$emit("saveStrategy");
@@ -331,6 +328,7 @@ export default {
       console.log(graph.toJSON());
     },
     handleSubmit() {
+      // 如果websocket关闭了，重新连接
       let formData = new FormData();
       let nodes = graph.getNodes();
       let edges = graph.getEdges();
