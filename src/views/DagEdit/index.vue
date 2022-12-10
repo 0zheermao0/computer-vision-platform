@@ -23,7 +23,7 @@
         </el-tabs> -->
       <header class="base-header-title">模块结果</header>
       <div v-if="enabled" class="right-content">
-        <VisualizedResult :base-url="baseUrl"/>
+        <VisualizedResult :base-url="baseUrl" :status="status"/>
       </div>
     </aside>
     <ContextMenu v-if="enabled"></ContextMenu>
@@ -61,6 +61,7 @@ import EditOrderForm from "./components/EditOrderForm";
 import StencilTree from "./components/StencilTree";
 import VisualizedResult from "./components/VisualizedResult";
 import {formData} from "@/views/DagEdit/const/data";
+import {baseURL} from "@/config/baseConfig";
 
 let graph = null;
 export default {
@@ -82,11 +83,19 @@ export default {
       cellData: {},
       graphData:null,
       paramsDialogVisible: false,
-      visualizedResult: {},
       baseUrl: 'http://192.168.137.221:8000/media/test.png',
+      status: 'danger',
     };
   },
   created() {
+    // 实时监控this.$websocket.ws_data的值的变化，并将变化后的值赋值给baseUrl
+    // this.$watch(
+    //   () => this.$websocket.ws_data,
+    //   (newVal, oldVal) => {
+    //     this.baseUrl = newVal;
+    //     console.log('wswsws', oldVal)
+    //   }
+    // );
   },
   mounted() {
     this.initDagGraph();
@@ -134,7 +143,11 @@ export default {
       })
       graph.on("cell:click",  ({ cell }) => {
         console.log('click:', cell)
-        this.baseUrl = 'http://192.168.137.221:8000/media/test1.png'
+        if (this.$websocket.getWsData()[cell.id]) {
+          this.baseUrl = baseURL + this.$websocket.getWsData()[cell.id].img;
+          this.status = this.$websocket.getWsData()[cell.id].status;
+        }
+        console.log('click内测试', this.baseUrl)
       })
     },
     // 获取被选中节点的数据
@@ -142,7 +155,7 @@ export default {
       this.currentSelect = cell.shape;
       this.currentCell = cell;
       Object.assign(this.cellData, cell.getData());
-      console.log('getNodeInfo:', this.cellData)
+      // console.log('getNodeInfo:', this.cellData)
       let nodeAttrs = cell.getAttrs();
       this.cellData.name.label = nodeAttrs?.label?.text;
       this.paramsDialogVisible = true;
@@ -184,9 +197,6 @@ export default {
       graph.unselect(this.currentCell);
       this.clearData();
     }
-  },
-  handleMessage(e) {
-    console.log('message:', e)
   }
 };
 </script>

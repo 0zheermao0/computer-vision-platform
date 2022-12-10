@@ -1,12 +1,14 @@
 import ElementUI from 'element-ui'
 
-class myWebSocket extends WebSocket{
-    data = 'http://192.168.137.221:8000/media/test.png'
-}
+// class myWebSocket extends WebSocket{
+//     data = 'http://192.168.137.221:8000/media/test.png'
+// }
+
+let ws_data = {}
 
 function initWebSocket () {
     const wsUri = 'ws://192.168.137.221:8000/ws/'
-    this.socket = new myWebSocket(wsUri)// 这里面的this都指向vue
+    this.socket = new WebSocket(wsUri)// 这里面的this都指向vue
     this.socket.onerror = webSocketOnError
     this.socket.onmessage = webSocketOnMessage
     this.socket.onclose = closeWebsocket
@@ -23,7 +25,7 @@ function webSocketOnError (e) {
 }
 function webSocketOnMessage (e) {
     const data = JSON.parse(e.data)
-    console.log(data)
+    // console.log(data)
     if (data.contentType === 'INFO') {
         ElementUI.Notification({
             title: 'websocket',
@@ -48,11 +50,9 @@ function webSocketOnMessage (e) {
             position: 'bottom-right',
             duration: 0
         })
-    } else if (data.contentType === 'RES') {
-        let url = 'data:image/png:base64,' + data.content.img
-        this.data = url
     } else {
-        console.log(data.content)
+        ws_data[data.content.node_id] = {img: data.content.img, status: data.content.status}
+        console.log('ws_data测试', ws_data)
     }
 }
 // 关闭websocket
@@ -71,6 +71,11 @@ function webSocketSend (message) {
     this.socket.send(JSON.stringify(message))
 }
 
+function getWsData () {
+    let newData = ws_data
+    return newData
+}
+
 export default {
-    initWebSocket, close, webSocketSend
+    initWebSocket, close, webSocketSend, ws_data, getWsData
 }

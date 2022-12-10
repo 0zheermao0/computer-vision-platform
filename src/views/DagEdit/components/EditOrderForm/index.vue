@@ -92,7 +92,7 @@ export default {
     handleImgSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
       this.orderFormData.params.img.value = res.data.url
-      console.log('res.data.url:', res.data.url);
+      // console.log('res.data.url:', res.data.url);
     },
     beforeImgUpload(file) {
       console.log('file', file)

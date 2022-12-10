@@ -2,7 +2,7 @@
   <div>
     <el-col>
       <el-row>
-        <p>执行状态：<el-tag type="danger">失败</el-tag></p>
+        <p>执行状态：<el-tag :type="status">{{statusMap[status]}}</el-tag></p>
       </el-row>
       <el-row>
         <p>可视化执行结果预览：</p>
@@ -20,21 +20,23 @@
 export default {
   name: "VisualizedResult",
   props: {
-    baseUrl: {type: String, default: ''},
-  },
-  watch: {
     baseUrl: {
-      handler(val) {
-        Object.assign(this.url, val);
-      },
-      deep: true,
-      // immediate: true
+      type: String,
+      default: ""
     },
-
+    status: {
+      type: String,
+      default: "danger"
+    }
   },
   data() {
     return {
-      url: 'http://192.168.137.221:8000/media/test.png',
+      // url: 'http://192.168.137.221:8000/media/test.png',
+      statusMap: {
+        success: "成功",
+        danger: "失败",
+        warning: "警告"
+      }
     }
   }
 }
