@@ -328,7 +328,6 @@ export default {
       console.log(graph.toJSON());
     },
     handleSubmit() {
-      // 如果websocket关闭了，重新连接
       let formData = new FormData();
       let nodes = graph.getNodes();
       let edges = graph.getEdges();
@@ -357,13 +356,6 @@ export default {
       });
       formData.append("nodes", JSON.stringify(nodesData));
       formData.append("edges", JSON.stringify(edgesData));
-      // request({
-      //   method: 'post',
-      //   url: '/scheduling/execute/',
-      //   data: formData
-      // }).then((res) => {
-      //   console.log(res.data.data)
-      // })
       let formDataJson = {};
       for (let key of formData.keys()) {
         formDataJson[key] = formData.get(key);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="base-header-title base-title-font">DAG图编辑器</header>
+    <header class="base-header-title base-title-font">算法流程构建器</header>
     <el-input
       v-model="searchValue"
       class="search-input"

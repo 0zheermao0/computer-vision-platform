@@ -1,6 +1,6 @@
 import { Graph, Addon, Shape, Vector } from "@antv/x6";
 import "./shape";
-import {commonEdage, uploadFormData} from "../const/config";
+import {commonEdge, uploadFormData} from "../const/config";
 import { cloneDeep } from "lodash";
 export default class DagGraph {
   static init(id) {
@@ -59,7 +59,7 @@ export default class DagGraph {
           radius: 25
         },
         createEdge() {
-          let newEdge = new Shape.Edge(cloneDeep(commonEdage));
+          let newEdge = new Shape.Edge(cloneDeep(commonEdge));
           return newEdge;
         },
         validateConnection({

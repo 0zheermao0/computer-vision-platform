@@ -243,7 +243,19 @@ export const BaseCell = Graph.registerNode("base-cell", {
     {
       tagName: "text",
       selector: "label"
-    }
+    },
+    // {
+    //   tagName: "image",
+    //   selector: "image",
+    //     attrs: {
+    //         // 使用本地图片
+    //         'xlink:href': require('@/assets/success.png'),
+    //         width: 20,
+    //         height: 20,
+    //         x: 95,
+    //         y: 12
+    //     }
+    // }
   ],
   ports: {
     groups: cloneDeep(commonPortsGroups)
@@ -253,12 +265,12 @@ export const BaseCell = Graph.registerNode("base-cell", {
 export const start = Graph.registerNode("start", {
   inherit: "base-cell",
   size: {
-    width: 90,
+    width: 100,
     height: 40
   },
   attrs: {
     label: {
-      text: "图片源"
+      text: "图像源"
     },
     path: {
       d:
@@ -278,7 +290,7 @@ export const Pipeline = Graph.registerNode("pipeline", {
   inherit: "base-cell",
   attrs: {
     label: {
-      text: "算法组件"
+      text: "算法组件",
     },
     path: {
       d:
@@ -290,7 +302,7 @@ export const Pipeline = Graph.registerNode("pipeline", {
     }
   },
   size: {
-    width: 116,
+    width: 120,
     height: 40
   },
   ports: {

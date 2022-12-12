@@ -20,7 +20,7 @@ export const decision = {
 //
 export const stencilList = operationsList;
 // dag-edge边的配置数据
-export const commonEdage = {
+export const commonEdge = {
   attrs: {
     line: {
       stroke: "#2CFEFF", // #e52e1a

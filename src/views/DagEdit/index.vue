@@ -23,7 +23,7 @@
         </el-tabs> -->
       <header class="base-header-title">模块结果</header>
       <div v-if="enabled" class="right-content">
-        <VisualizedResult :base-url="baseUrl" :status="status"/>
+        <VisualizedResult :base-url="baseUrl" :status="status" :cell-name.sync="cellName"/>
       </div>
     </aside>
     <ContextMenu v-if="enabled"></ContextMenu>
@@ -83,19 +83,12 @@ export default {
       cellData: {},
       graphData:null,
       paramsDialogVisible: false,
+      cellName: "",
       baseUrl: 'http://192.168.137.221:8000/media/test.png',
-      status: 'danger',
+      status: 'info',
     };
   },
   created() {
-    // 实时监控this.$websocket.ws_data的值的变化，并将变化后的值赋值给baseUrl
-    // this.$watch(
-    //   () => this.$websocket.ws_data,
-    //   (newVal, oldVal) => {
-    //     this.baseUrl = newVal;
-    //     console.log('wswsws', oldVal)
-    //   }
-    // );
   },
   mounted() {
     this.initDagGraph();
@@ -143,11 +136,20 @@ export default {
       })
       graph.on("cell:click",  ({ cell }) => {
         console.log('click:', cell)
+        this.cellName = cell.data.name.label;
+        console.log('click test: ', this.$websocket.getWsData())
         if (this.$websocket.getWsData()[cell.id]) {
           this.baseUrl = baseURL + this.$websocket.getWsData()[cell.id].img;
           this.status = this.$websocket.getWsData()[cell.id].status;
         }
-        console.log('click内测试', this.baseUrl)
+        else if (Object.keys(this.$websocket.getWsData()).length !== 0 && !this.$websocket.getWsData()[cell.id]) {
+          this.baseUrl = baseURL + 'test.png';
+          this.status = 'danger';
+        }
+        else {
+          this.baseUrl = baseURL + 'test.png';
+          this.status = 'info';
+        }
       })
     },
     // 获取被选中节点的数据

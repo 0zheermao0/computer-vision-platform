@@ -1,6 +1,3 @@
-// 节点配置信息
-
-
 // 上传表单对象
 export const formData = {
     fork: {

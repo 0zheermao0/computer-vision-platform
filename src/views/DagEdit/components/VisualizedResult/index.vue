@@ -2,7 +2,7 @@
   <div>
     <el-col>
       <el-row>
-        <p>执行状态：<el-tag :type="status">{{statusMap[status]}}</el-tag></p>
+        <p>{{cellName}} 执行状态：<el-tag :type="status">{{statusMap[status]}}</el-tag></p>
       </el-row>
       <el-row>
         <p>可视化执行结果预览：</p>
@@ -20,6 +20,10 @@
 export default {
   name: "VisualizedResult",
   props: {
+    cellName: {
+      type: String,
+      default: ""
+    },
     baseUrl: {
       type: String,
       default: ""
@@ -35,10 +39,10 @@ export default {
       statusMap: {
         success: "成功",
         danger: "失败",
-        warning: "警告"
+        info: "待执行"
       }
     }
-  }
+  },
 }
 </script>
 
