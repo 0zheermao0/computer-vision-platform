@@ -65,60 +65,60 @@
         </el-button>
       </el-tooltip>
 
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="复制 (Cmd + C)"
-        placement="bottom"
-      >
-        <el-button
-          :disabled="!isCanUse.canCopy"
-          name="copy"
-          class="el-icon-document-copy"
-          size="small"
-          icon="copy"
-          @click="handleClick"
-        >
-        </el-button>
-      </el-tooltip>
+<!--      <el-tooltip-->
+<!--        class="item"-->
+<!--        effect="dark"-->
+<!--        content="复制 (Cmd + C)"-->
+<!--        placement="bottom"-->
+<!--      >-->
+<!--        <el-button-->
+<!--          :disabled="!isCanUse.canCopy"-->
+<!--          name="copy"-->
+<!--          class="el-icon-document-copy"-->
+<!--          size="small"-->
+<!--          icon="copy"-->
+<!--          @click="handleClick"-->
+<!--        >-->
+<!--        </el-button>-->
+<!--      </el-tooltip>-->
+
+<!--      <el-tooltip-->
+<!--        class="item"-->
+<!--        effect="dark"-->
+<!--        content="剪切 (Cmd + X)"-->
+<!--        placement="bottom"-->
+<!--      >-->
+<!--        <el-button-->
+<!--          :disabled="!isCanUse.canCut"-->
+<!--          name="cut"-->
+<!--          class="el-icon-scissors"-->
+<!--          size="small"-->
+<!--          icon="scissor"-->
+<!--          @click="handleClick"-->
+<!--        >-->
+<!--        </el-button>-->
+<!--      </el-tooltip>-->
+
+<!--      <el-tooltip-->
+<!--        class="item"-->
+<!--        effect="dark"-->
+<!--        content="粘贴 (Cmd + V)"-->
+<!--        placement="bottom"-->
+<!--      >-->
+<!--        <el-button-->
+<!--          :disabled="!isCanUse.canPaste"-->
+<!--          name="paste"-->
+<!--          class="el-icon-copy-document"-->
+<!--          size="small"-->
+<!--          @click="handleClick"-->
+<!--        >-->
+<!--        </el-button>-->
+<!--      </el-tooltip>-->
 
       <el-tooltip
         class="item"
         effect="dark"
-        content="剪切 (Cmd + X)"
-        placement="bottom"
-      >
-        <el-button
-          :disabled="!isCanUse.canCut"
-          name="cut"
-          class="el-icon-scissors"
-          size="small"
-          icon="scissor"
-          @click="handleClick"
-        >
-        </el-button>
-      </el-tooltip>
-
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="粘贴 (Cmd + V)"
-        placement="bottom"
-      >
-        <el-button
-          :disabled="!isCanUse.canPaste"
-          name="paste"
-          class="el-icon-copy-document"
-          size="small"
-          @click="handleClick"
-        >
-        </el-button>
-      </el-tooltip>
-
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="保存PNG (Cmd + S)"
+        content="保存为PNG (Cmd + S)"
         placement="bottom"
       >
         <el-button
@@ -158,6 +158,7 @@
 <script>
 import DagGraph from "../../graph";
 import { DataUri } from "@antv/x6";
+import {formData} from "@/views/DagEdit/const/data";
 
 let graph = null;
 export default {
@@ -264,6 +265,7 @@ export default {
       switch (name) {
         case "init":
           this.initGraph();
+          this.$websocket.clearWsData();
           break;
         case "undo":
           graph.history.undo();
@@ -315,7 +317,8 @@ export default {
       const start_node = graph.createNode({
         shape: "start",
         x: 200,
-        y: 50
+        y: 50,
+        data: formData['start']
       });
       graph.addNode(start_node);
     },

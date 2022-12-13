@@ -76,6 +76,10 @@ function getWsData () {
     return newData
 }
 
+function clearWsData () {
+    ws_data = {}
+}
+
 export default {
-    initWebSocket, close, webSocketSend, ws_data, getWsData
+    initWebSocket, close, webSocketSend, ws_data, getWsData, clearWsData
 }

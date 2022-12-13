@@ -147,7 +147,7 @@ export default {
           this.status = 'danger';
         }
         else {
-          this.baseUrl = baseURL + 'test.png';
+          this.baseUrl = baseURL + 'media/test.png';
           this.status = 'info';
         }
       })
