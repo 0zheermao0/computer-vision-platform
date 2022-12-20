@@ -367,6 +367,7 @@ export default {
         type: "execute",
         data: formDataJson
       });
+      console.log('DAG执行测试', formDataJson);
     }
   }
 };

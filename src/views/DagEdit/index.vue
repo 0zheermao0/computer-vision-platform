@@ -84,7 +84,7 @@ export default {
       graphData:null,
       paramsDialogVisible: false,
       cellName: "",
-      baseUrl: 'http://192.168.137.221:8000/media/test.png',
+      baseUrl: baseURL + 'media/test.png',
       status: 'info',
     };
   },

@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 let ws_data = {}
 
 function initWebSocket () {
-    const wsUri = 'ws://192.168.137.221:8000/ws/'
+    const wsUri = 'ws://192.168.137.126:8000/ws/'
     this.socket = new WebSocket(wsUri)// 这里面的this都指向vue
     this.socket.onerror = webSocketOnError
     this.socket.onmessage = webSocketOnMessage

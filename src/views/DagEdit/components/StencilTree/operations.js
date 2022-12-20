@@ -1,5 +1,5 @@
 export const operationsList = [
-    // { label: "判断节点", value: "fork", opr: "fork" },
+    { label: "判断节点", value: "fork", opr: "fork" },
     { label: "通道变更", value: "pipeline", opr: "channels"},
     { label: "裁剪", value: "pipeline", opr: "crop" },
     { label: "缩放", value: "pipeline", opr: "resize" },

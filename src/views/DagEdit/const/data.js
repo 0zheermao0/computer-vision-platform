@@ -1,15 +1,12 @@
 // 上传表单对象
 export const formData = {
     fork: {
-        name: "判断节点",
-        description: "判断节点",
-        triggerType: null, // 触发条件
-        targetUnit: null, // 目标单位
-        statusUnit: null, // 单位状态
-        targetArea: null, // 区域
-        situationTime: null, // 态势时间
-        countdown: null, // 倒计时
-        selectTime: null // 指定时间点
+        name: {label: "判断节点", value: "fork"},
+        params: {
+            condition: {label: "条件", value: "", options: ['是否有结果']},
+            conditionType: {label: "条件类型", value: ""},
+            conditionValue: {label: "条件值", value: ""},
+        }
     },
     start: {
         id: 0,
