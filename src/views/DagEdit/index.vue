@@ -62,6 +62,7 @@ import StencilTree from "./components/StencilTree";
 import VisualizedResult from "./components/VisualizedResult";
 import {formData} from "@/views/DagEdit/const/data";
 import {baseURL} from "@/config/baseConfig";
+import {translate} from "@/views/DagEdit/const/translate";
 
 let graph = null;
 export default {
@@ -135,9 +136,9 @@ export default {
         }
       })
       graph.on("cell:click",  ({ cell }) => {
-        console.log('click:', cell)
+        // console.log('click:', cell)
         this.cellName = cell.data.name.label;
-        console.log('click test: ', this.$websocket.getWsData())
+        // console.log('click test: ', this.$websocket.getWsData())
         if (this.$websocket.getWsData()[cell.id]) {
           this.baseUrl = baseURL + this.$websocket.getWsData()[cell.id].img;
           this.status = this.$websocket.getWsData()[cell.id].status;
@@ -149,6 +150,13 @@ export default {
         else {
           this.baseUrl = baseURL + 'media/test.png';
           this.status = 'info';
+        }
+
+        if (cell.shape === "end" && this.$websocket.getWsData()[cell.id]) {
+          let info = this.$websocket.getWsData()[cell.id].info
+          for (const i in info) {
+            cell.data.params[i] = {label: translate[i], value: info[i]}
+          }
         }
       })
     },

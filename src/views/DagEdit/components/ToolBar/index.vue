@@ -331,6 +331,7 @@ export default {
       console.log(graph.toJSON());
     },
     handleSubmit() {
+      console.log('DAG执行测试edges数据', graph.getEdges());
       let formData = new FormData();
       let nodes = graph.getNodes();
       let edges = graph.getEdges();
@@ -352,13 +353,43 @@ export default {
       });
       edges.forEach((edge) => {
         let edgeData = {
+          id: edge.id,
+          labels: edge.labels,
           source: edge.source.cell,
           target: edge.target.cell,
         };
         edgesData.push(edgeData);
       });
+      // 遍历edges，如果该边的labels为['是']，则将该边的target以及该target的后续node的params中的isTrue置为true，否则置为false
+      console.log('edgesData测试', edgesData)
+      edgesData.forEach((edge) => {
+        // 如果edge没有labels，则不做处理
+        if (edge.labels.length === 0) {
+          return;
+        }
+        if (edge.labels[0].attrs.label.text === '是') {
+          let targetNode = nodesData.find((node) => node.id === edge.target);
+          targetNode.isTrue = 1;
+          // let targetNodeIndex = nodesData.findIndex((node) => node.id === edge.target);
+          let nextNodes = edgesData.filter((edge) => edge.source === edge.target);
+          nextNodes.forEach((nextNode) => {
+            let nextNodeIndex = nodesData.findIndex((node) => node.id === nextNode.target);
+            nodesData[nextNodeIndex].isTrue = 1;
+          });
+        } else {
+          let targetNode = nodesData.find((node) => node.id === edge.target);
+          targetNode.isTrue = 0;
+          // let targetNodeIndex = nodesData.findIndex((node) => node.id === edge.target);
+          let nextNodes = edgesData.filter((edge) => edge.source === edge.target);
+          nextNodes.forEach((nextNode) => {
+            let nextNodeIndex = nodesData.findIndex((node) => node.id === nextNode.target);
+            nodesData[nextNodeIndex].isTrue = 0;
+          });
+        }
+      });
       formData.append("nodes", JSON.stringify(nodesData));
       formData.append("edges", JSON.stringify(edgesData));
+
       let formDataJson = {};
       for (let key of formData.keys()) {
         formDataJson[key] = formData.get(key);

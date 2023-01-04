@@ -51,7 +51,7 @@ function webSocketOnMessage (e) {
             duration: 0
         })
     } else {
-        ws_data[data.content.node_id] = {img: data.content.img, status: data.content.status}
+        ws_data[data.content.node_id] = {img: data.content.img, status: data.content.status, info: data.content.info}
         console.log('ws_data测试', ws_data)
     }
 }

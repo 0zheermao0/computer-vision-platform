@@ -8,7 +8,7 @@
         @submit.native.prevent
     >
       <el-form-item
-          v-for="(item, index) in Object.keys(orderFormData.params)"
+          v-for="(item, index) in paramsKeys"
           :key="index"
           :label="orderFormData.params[item].label"
           :prop="item"
@@ -33,7 +33,7 @@
             @keyup.native.enter="debounceHandler"
         ></el-input>
         <el-select
-            v-else
+            v-else-if="Array.isArray(orderFormData.params[item].options)"
             v-model="orderFormData.params[item].value"
             placeholder="请选择"
             @change="debounceHandler"
@@ -74,6 +74,13 @@ export default {
         params: {}
       }
     };
+  },
+  computed: {
+    paramsKeys() {
+      return Object.keys(this.orderFormData.params).filter(
+        (item) => this.orderFormData.params[item].show
+      );
+    }
   },
   watch: {
     formData: {

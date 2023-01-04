@@ -7,7 +7,7 @@
       <el-row>
         <p>可视化执行结果预览：</p>
         <el-image
-            style="width: 600px; height: 500px"
+            style="width: 100%; height: 70vh"
             :src="baseUrl"
             :preview-src-list="[baseUrl]">
         </el-image>

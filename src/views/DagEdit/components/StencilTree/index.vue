@@ -73,6 +73,7 @@ export default {
 .list-box {
   margin-left: 30px;
   margin-top: 7px;
+  overflow: auto;
 }
 .list-item {
   height: 32px;

@@ -14,4 +14,5 @@ export const operationsList = [
     { label: "特征检测", value: "pipeline", opr: "feature" },
     { label: "畸变矫正", value: "pipeline", opr: "remap" },
     { label: "像素统计", value: "pipeline", opr: "hist" },
+    { label: "读取参数", value: "end", opr: "params" },
 ];
